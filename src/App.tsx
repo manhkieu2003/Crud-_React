@@ -27,6 +27,16 @@ function App() {
     //ReRender
     setProduct(products.filter(item=>item.id!==id))
   }
+  // hàm add 
+  const OnhanleAdd=(product:ProductTypes)=>{
+    const add = async()=>
+    {
+     const {data} = await axios.post('http://localhost:3000/products',product)
+      setProduct([...products,data])
+    }
+    add()
+
+  }
   
   
 
@@ -35,7 +45,7 @@ function App() {
       {/* thiết lập routes */}
       <Routes>
           <Route path='/amin/product' element={<ManagerProduct product={products} OnRemove={hanleDelete}/>}/>
-          <Route path='add' element={<ProductAdd/>}/>
+          <Route path='add' element={<ProductAdd OnRemove={OnhanleAdd}/>}/>
       </Routes>
     </>
   )
