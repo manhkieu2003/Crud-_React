@@ -7,6 +7,8 @@ import { Route, Routes } from 'react-router-dom'
 
 
 import axios from 'axios'
+import ManagerProduct from './pages/ManagerProduct'
+import ProductAdd from './pages/ProductAdd'
 
 
 function App() {
@@ -19,6 +21,12 @@ function App() {
       }
       getProduct()
   },[])
+  // hàm xóa 
+  const hanleDelete=(id:number)=>{
+    axios.delete('http://localhost:3000/products/'+id)
+    //ReRender
+    setProduct(products.filter(item=>item.id!==id))
+  }
   
   
 
@@ -26,7 +34,8 @@ function App() {
     <>
       {/* thiết lập routes */}
       <Routes>
-          <Route path='/amin/product' element={}></Route>
+          <Route path='/amin/product' element={<ManagerProduct product={products} OnRemove={hanleDelete}/>}/>
+          <Route path='add' element={<ProductAdd/>}/>
       </Routes>
     </>
   )
