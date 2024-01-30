@@ -9,7 +9,7 @@ type Props = {
  OnRemove:(product:ProductTypes)=>void
 }
 type Inputs = {
-  id:number
+ id:number
   name: string
   price: string
 }

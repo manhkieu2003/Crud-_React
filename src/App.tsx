@@ -9,6 +9,7 @@ import { Route, Routes } from 'react-router-dom'
 import axios from 'axios'
 import ManagerProduct from './pages/ManagerProduct'
 import ProductAdd from './pages/ProductAdd'
+import ProductEdit from './pages/ProductEdit'
 
 
 function App() {
@@ -37,6 +38,16 @@ function App() {
     add()
 
   }
+  // hàm sửa dữ liệu (update)
+  const handleEdit=(product:ProductTypes)=>{
+     const putedit = async()=>{
+       const {data}=await axios.put('http://localhost:3000/products/'+ product.id,product)
+       //rerender
+        setProduct(products.map(item => item.id==data.id?data:item))
+        // nếu 2 id trùng nhau thì lấy thằng data mới không thì lấy item cũ 
+     }
+     putedit()
+  }
   
   
 
@@ -44,8 +55,10 @@ function App() {
     <>
       {/* thiết lập routes */}
       <Routes>
-          <Route path='/amin/product' element={<ManagerProduct product={products} OnRemove={hanleDelete}/>}/>
+          <Route path='/amin/product' element={<ManagerProduct product={products} OnRemove={hanleDelete}/>}>
+          </Route>
           <Route path='add' element={<ProductAdd OnRemove={OnhanleAdd}/>}/>
+          <Route path='/amin/product/:id/edit' element={<ProductEdit onUpdate={handleEdit}/>}></Route>
       </Routes>
     </>
   )
